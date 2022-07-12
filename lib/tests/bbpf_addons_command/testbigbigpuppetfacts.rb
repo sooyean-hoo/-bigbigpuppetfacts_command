@@ -20,12 +20,12 @@ class BBPFTester
 
   def bbpf_supportmatrixtest
     methods_to_check = [
+
+      'cowsay::shellout2::pipein::pipeout',
+      'cowsay::shellout2::filein::pipeout',
+      'cowsay::shellout2::filein::fileout',
+
       'cowsay::shellout2',
-
-      'cowsay::shellout2_pipein_pipeout',
-      'cowsay::shellout2_filein_pipeout',
-      'cowsay::shellout2_filein_fileout',
-
       'cowsay',
     ]
 
@@ -98,9 +98,11 @@ puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 data = 'THIS IS WHAT A COW would SAY!!! Yup COW Say is a Linux Command.bb...'
 
 [
-  'cowsay::shellout2_pipein_pipeout',
-  'cowsay::shellout2_filein_pipeout',
-  'cowsay::shellout2_filein_fileout',
+  'cowsay::shellout2::filein::fileout',
+
+  'cowsay::shellout2::pipein::pipeout',
+  'cowsay::shellout2::filein::pipeout',
+
   'cowsay', 'cowsay::shellout2'
 
 ].each do |mkey|
