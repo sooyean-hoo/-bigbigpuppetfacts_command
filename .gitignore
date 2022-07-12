@@ -1,4 +1,4 @@
-.git/
+.git*
 .*.sw[op]
 .metadata
 .yardoc
@@ -28,3 +28,4 @@
 /spec/fixtures/litmus_inventory.yaml
 /tasks/*.log
 examples/tests/*.log
+.history*
