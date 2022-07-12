@@ -6,65 +6,39 @@ class BBPFDrivers::COWSAY
   def compressmethods
     {
       'cowsay::shellout2' => proc { |data, _info: {}|
-                               Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, '( echo a | cowsay > /dev/null || sudo yum install -y cowsay ) && ( cat <TMPDIR>/data.dat |  cowsay  )')
+                               Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data,
+                               '( echo a | cowsay > /dev/null || sudo yum install -y cowsay ) && ( cat <TMPDIR>/data.dat |  cowsay  )')
                              },
 
       'cowsay::shellout2_pipein_pipeout' => proc { |data, _info: {}|
-                             Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cowsay')
-                           },
+                                              Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cowsay')
+                                            },
       'cowsay::shellout2_filein_pipeout' => proc { |data, _info: {}|
-                           Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat |cowsay')
-                         },
+                                              Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | cowsay')
+                                            },
       'cowsay::shellout2_filein_fileout' => proc { |data, _info: {}|
-                         Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat |cowsay > <TMPDIR>/data.dat', '<TMPDIR2>/data.dat' )
-                       },
-
+                                              Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | cowsay > <TMPDIR>/data.dat', '<TMPDIR2>/data.dat')
+                                            },
 
       'cowsay' => proc { |data, _info: {}|
-      Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat |  cowsay  ')
-    }
+                    Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat |  cowsay  ')
+                  }
     }
   end
 
   def decompressmethods
     {
-      'cowsay::shellout2' => proc { |data, _info: {}|
-                              data
-                             },
-
-
-                          'cowsay::shellout2_pipein_pipeout' => proc { |data, _info: {}|
-        data                },
-   'cowsay::shellout2_filein_pipeout' => proc { |data, _info: {}|
-    data                  },
-   'cowsay::shellout2_filein_fileout' => proc { |data, _info: {}|
-data                    },
-
-        'cowsay' => proc { |data, _info: {}|
-              data
-            }
+      'cowsay::shellout2' => proc { |data, _info: {}| data },
+      'cowsay::shellout2_pipein_pipeout' => proc { |data, _info: {}| data },
+      'cowsay::shellout2_filein_pipeout' => proc { |data, _info: {}| data },
+      'cowsay::shellout2_filein_fileout' => proc { |data, _info: {}| data },
+      'cowsay' => proc { |data, _info: {}|         data   }
     }
   end
 
   # rubocop:enable Style/ClassAndModuleChildren
   def test_methods
-    {
-      'cowsay::shellout2' => proc { |data, _info: {}|
-                              data
-                             },
-
-
-                          'cowsay::shellout2_pipein_pipeout' => proc { |data, _info: {}|
-        data                },
-   'cowsay::shellout2_filein_pipeout' => proc { |data, _info: {}|
-    data                  },
-   'cowsay::shellout2_filein_fileout' => proc { |data, _info: {}|
-data                    },
-
-        'cowsay' => proc { |data, _info: {}|
-              data
-            }
-    }
+    decompressmethods
   end
 
   alias encodemethods compressmethods
