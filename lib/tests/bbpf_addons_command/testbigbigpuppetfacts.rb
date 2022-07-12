@@ -20,11 +20,8 @@ class BBPFTester
 
   def bbpf_supportmatrixtest
     methods_to_check = [
-      '7z::zip::shellout2',
-      '7z::gzip::shellout2',
-
-      '7z::xz::shellout2',
-      '7z::bzip2::shellout2',
+      'cowsay::shellout2',
+      'cowsay'
     ]
 
     # methodshashs_to_check =
@@ -91,50 +88,26 @@ bb.use_compressmethod('^json_' + method2set)
 puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
 puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 
-# Use case 1
-fallback_methods = 'plain'
-method2set = 'xz_base64'
-puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
-bb.use_compressmethod_fallback fallback_methods
-bb.use_compressmethod('^json_' + method2set)
-puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
-puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+# Use case 1-
 
-# Use case 2
-fallback_methods = 'plain'
-method2set = 'xz_base64'
-puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
-bb.use_compressmethod_fallback fallback_methods
-bb.use_compressmethod('^json_' + method2set)
-puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
-puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+data='THIS IS WHAT A COW would SAY!!! Yup COW Say is a Linux Command.bb...'
 
-# Use case 3
-fallback_methods = 'plain'
-method2set = 'bz2_base64,xz_base64'
-puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
-bb.use_compressmethod_fallback fallback_methods
-bb.use_compressmethod('^json_' + method2set)
-puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
-puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-
-# Use case 4
-fallback_methods = 'plain'
-method2set = 'gz_base64,bz2_base64,xz_base64'
-puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
-bb.use_compressmethod_fallback fallback_methods
-bb.use_compressmethod('^json_' + method2set)
-puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
-puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-
-# Use case 5
-fallback_methods = 'gz_base64,bz2_base64,xz_base64,plain'
-method2set = 'shits'
-puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
-bb.use_compressmethod_fallback fallback_methods
-bb.use_compressmethod('^json_' + method2set)
-puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
-puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+[ 'cowsay', 'cowsay::shellout2' ].each do |mkey|
+  fallback_methods = 'plain'
+  method2set = mkey
+  puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
+  bb.use_compressmethod_fallback fallback_methods
+  # bb.use_compressmethod('^json_' + method2set)
+  bb.use_compressmethod(method2set)
+  puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
+  ret = bb.compress(data)
+  if ret && ret.match?('FATAL ERROR')
+    puts JSON.parse(ret)['message'].gsub(%r{\\n}, '\n').gsub(%r{\\t}, '\t')
+  else
+    puts ret
+  end
+  puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+end
 
 # Use case 6
 methodshashs_to_check = bb.bbpf_supportmatrix_factertest
