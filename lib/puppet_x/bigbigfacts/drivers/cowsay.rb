@@ -6,21 +6,21 @@ class BBPFDrivers::COWSAY
   def compressmethods
     {
       'cowsay::shellout2' => proc { |data, _info: {}|
-                               Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | /usr/local/bin/cowsay  ' )
+                               Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | /usr/local/bin/cowsay  ')
                              },
       'cowsay' => proc { |data, _info: {}|
-        Facter::Util::Bigbigpuppetfacts.compressmethods['cowsay::shellout2'].call(data,_info)
+        Facter::Util::Bigbigpuppetfacts.compressmethods['cowsay::shellout2'].call(data, _info)
       }
     }
   end
 
   def decompressmethods
     {
-    'cowsay::shellout2' => proc { |data, _info: {}|
-                             Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | /usr/local/bin/cowsay  ' )
-                           },
+      'cowsay::shellout2' => proc { |data, _info: {}|
+                               Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | /usr/local/bin/cowsay  ')
+                             },
     'cowsay' => proc { |data, _info: {}|
-      Facter::Util::Bigbigpuppetfacts.compressmethods['cowsay::shellout2'].call(data,_info)
+      Facter::Util::Bigbigpuppetfacts.compressmethods['cowsay::shellout2'].call(data, _info)
     }
     }
   end
@@ -30,12 +30,11 @@ class BBPFDrivers::COWSAY
     {
 
       'cowsay::shellout2' => proc { |data, _info: {}|
-                              data
+                               data
                              },
       'cowsay' => proc { |data, _info: {}|
         data
       }
-
 
     }
   end
@@ -43,6 +42,5 @@ class BBPFDrivers::COWSAY
   alias encodemethods compressmethods
   alias decodemethods decompressmethods
 
-  def autoload_declare
-  end
+  def autoload_declare; end
 end

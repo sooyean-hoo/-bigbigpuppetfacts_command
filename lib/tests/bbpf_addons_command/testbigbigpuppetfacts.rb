@@ -21,7 +21,7 @@ class BBPFTester
   def bbpf_supportmatrixtest
     methods_to_check = [
       'cowsay::shellout2',
-      'cowsay'
+      'cowsay',
     ]
 
     # methodshashs_to_check =
@@ -90,7 +90,7 @@ puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 
 # Use case 1-
 
-data='THIS IS WHAT A COW would SAY!!! Yup COW Say is a Linux Command.bb...'
+data = 'THIS IS WHAT A COW would SAY!!! Yup COW Say is a Linux Command.bb...'
 
 [ 'cowsay', 'cowsay::shellout2' ].each do |mkey|
   fallback_methods = 'plain'
@@ -101,7 +101,7 @@ data='THIS IS WHAT A COW would SAY!!! Yup COW Say is a Linux Command.bb...'
   bb.use_compressmethod(method2set)
   puts "==bb.compressmethod_used=#{bb.compressmethod_used}="
   ret = bb.compress(data)
-  if ret && ret.match?('FATAL ERROR')
+  if ret&.match?('FATAL ERROR')
     puts JSON.parse(ret)['message'].gsub(%r{\\n}, '\n').gsub(%r{\\t}, '\t')
   else
     puts ret
