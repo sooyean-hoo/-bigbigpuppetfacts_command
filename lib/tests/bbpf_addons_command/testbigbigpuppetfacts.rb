@@ -98,6 +98,14 @@ puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 data = 'THIS IS WHAT A COW would SAY!!! Yup COW Say is a Linux Command.bb...'
 
 [
+
+  'cowdragon::shellout2::filein::fileout',
+
+  'cowdragon::shellout2::pipein::pipeout',
+  'cowdragon::shellout2::filein::pipeout',
+
+  'cowdragon', 'cowdragon::shellout2',
+
   'cowsay::shellout2::filein::fileout',
 
   'cowsay::shellout2::pipein::pipeout',

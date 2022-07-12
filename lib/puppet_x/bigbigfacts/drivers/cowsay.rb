@@ -1,5 +1,5 @@
 require_relative '../bbpfdrivers.rb'
-# Drivers to Load the Z7Z method
+# Drivers to Load the COWSAY method
 class BBPFDrivers::COWSAY
   def initialise; end
 
