@@ -11,14 +11,14 @@ class BBPFDrivers::COWSAY
                              },
 
       'cowsay::shellout2::pipein::pipeout' => proc { |data, _info: {}|
-                                              Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cowsay')
-                                            },
+                                                Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cowsay')
+                                              },
       'cowsay::shellout2::filein::pipeout' => proc { |data, _info: {}|
-                                              Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | cowsay')
-                                            },
+                                                Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | cowsay')
+                                              },
       'cowsay::shellout2::filein::fileout' => proc { |data, _info: {}|
-                                              Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | cowsay > <TMPDIR2>/data.dat', '<TMPDIR2>/data.dat')
-                                            },
+                                                Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | cowsay > <TMPDIR2>/data.dat', '<TMPDIR2>/data.dat')
+                                              },
 
       'cowsay' => proc { |data, _info: {}|
                     Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat |  cowsay  ')
@@ -32,7 +32,7 @@ class BBPFDrivers::COWSAY
       'cowsay::shellout2::pipein::pipeout' => proc { |data, _info: {}| data },
       'cowsay::shellout2::filein::pipeout' => proc { |data, _info: {}| data },
       'cowsay::shellout2::filein::fileout' => proc { |data, _info: {}| data },
-      'cowsay' => proc { |data, _info: {}|         data   }
+      'cowsay' => proc { |data, _info: {}|         data }
     }
   end
 
