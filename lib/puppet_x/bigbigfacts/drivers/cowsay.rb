@@ -6,22 +6,23 @@ class BBPFDrivers::COWSAY
   def compressmethods
     {
       'cowsay::shellout2' => proc { |data, _info: {}|
-                               Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data,
-                               '( echo a | cowsay > /dev/null || sudo yum install -y cowsay ) && ( cat <TMPDIR>/data.dat |  cowsay  )')
+                               "\n" + Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data,
+                                                      '( echo a | cowsay > /dev/null || sudo yum install -y cowsay ) && ( cat <TMPDIR>/data.dat |  cowsay  )')
                              },
 
       'cowsay::shellout2::pipein::pipeout' => proc { |data, _info: {}|
-                                                Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cowsay')
+                                                "\n" + Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cowsay')
                                               },
       'cowsay::shellout2::filein::pipeout' => proc { |data, _info: {}|
-                                                Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | cowsay')
+                                                "\n" + Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | cowsay')
                                               },
       'cowsay::shellout2::filein::fileout' => proc { |data, _info: {}|
-                                                Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | cowsay > <TMPDIR2>/data.dat', '<TMPDIR2>/data.dat')
+                                                "\n" + Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat | cowsay > <TMPDIR2>/data.dat',
+'<TMPDIR2>/data.dat')
                                               },
 
       'cowsay' => proc { |data, _info: {}|
-                    Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat |  cowsay  ')
+                    "\n" + Facter::Util::Bigbigpuppetfacts.compressmethods['::shellout2'].call(data, 'cat <TMPDIR>/data.dat |  cowsay  ')
                   }
     }
   end
