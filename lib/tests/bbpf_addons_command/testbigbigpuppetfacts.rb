@@ -20,6 +20,7 @@ class BBPFTester
 
   def bbpf_supportmatrixtest
     methods_to_check = [
+      'examplelinuxscript',
 
       'cowsay::shellout2::pipein::pipeout',
       'cowsay::shellout2::filein::pipeout',
@@ -98,6 +99,8 @@ puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 data = 'THIS IS WHAT A COW would SAY!!! Yup COW Say is a Linux Command.bb...'
 
 [
+
+  'examplelinuxscript',
 
   'cowdragon::shellout2::filein::fileout',
 
