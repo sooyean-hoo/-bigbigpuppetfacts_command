@@ -39,7 +39,22 @@ class BBPFDrivers::COWSAY
 
   # rubocop:enable Style/ClassAndModuleChildren
   def test_methods
-    decompressmethods
+    t = {
+      'cowsay' => proc { |data, _info: {}| # rubocop:disable Lint/UnderscorePrefixedVariableName
+        methodname = if _info.key?('m')
+                       _info['m']
+                     else
+                       'cowsay'
+                     end
+        cowsaydata = data.split("\n")[0].gsub(%r{[^a-zA-Z 0-9]\n}, '')[0..5]
+        data if compressmethods[methodname].call(cowsaydata, _info: _info).include?(cowsaydata)
+        # Adjusted it... For CowSay, there is not such thing as inverse function. So This test is change to check CowSay AsciiART is generated properly.
+      }
+    }
+    compressmethods.keys.select { |mname| mname.include?('cowsay::') }.each do |methodname|
+      t[methodname] = proc { |data, _info: {}| test_methods['cowsay'].call(data, _info: _info) } # rubocop:disable Lint/UnderscorePrefixedVariableName
+    end
+    t
   end
 
   alias encodemethods compressmethods
