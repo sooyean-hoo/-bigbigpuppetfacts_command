@@ -97,10 +97,10 @@ puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 # Use case 1-
 
 data = 'THIS IS WHAT A COW would SAY!!! Yup COW Say is a Linux Command.bb...'
-
+info = {
+  'PATH' => '/usr/local/bin/:' + ENV['PATH']
+}
 [
-
-  'examplelinuxscript',
 
   'cowdragon::shellout2::filein::fileout',
 
@@ -114,12 +114,15 @@ data = 'THIS IS WHAT A COW would SAY!!! Yup COW Say is a Linux Command.bb...'
   'cowsay::shellout2::pipein::pipeout',
   'cowsay::shellout2::filein::pipeout',
 
-  'cowsay', 'cowsay::shellout2'
+  'cowsay', 'cowsay::shellout2',
+
+  'examplelinuxscript'
 
 ].each do |mkey|
   fallback_methods = 'plain'
   method2set = mkey
   puts "==fallback_methods=#{fallback_methods}=\n=method2set=#{method2set}="
+  bb.use_compressinfo info
   bb.use_compressmethod_fallback fallback_methods
   # bb.use_compressmethod('^json_' + method2set)
   bb.use_compressmethod(method2set)
