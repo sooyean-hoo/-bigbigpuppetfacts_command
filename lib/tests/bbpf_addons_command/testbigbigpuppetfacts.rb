@@ -18,8 +18,10 @@ require 'facter/util/bigbigpuppetfacts'
 class BBPFTester
   include Facter::Util::Bigbigpuppetfacter
 
-  def bbpf_supportmatrixtest
+  def bbpf_supportmatrixtest(info: {})
     methods_to_check = [
+      'cowsay',
+
       'examplelinuxscript',
 
       'cowsay::shellout2::pipein::pipeout',
@@ -27,7 +29,6 @@ class BBPFTester
       'cowsay::shellout2::filein::fileout',
 
       'cowsay::shellout2',
-      'cowsay',
     ]
 
     # methodshashs_to_check =
@@ -37,6 +38,7 @@ class BBPFTester
       bbpf_drivers([ File.join(File.dirname(__FILE__), '../../../lib/puppet_x/bigbigfacts/drivers/*.rb') ])
 
       begin
+        use_compressinfo info
         use_compressmethod(m)
         rethash[hash_key] = m == compressmethod_used ? 'Supported' : 'Not Supported'
       rescue LoadError
@@ -45,7 +47,7 @@ class BBPFTester
     end
   end
 
-  def bbpf_supportmatrix_factertest
+  def bbpf_supportmatrix_factertest(info: {})
     use_compressmethod_fallback 'plain'
     methods_to_check = 'gz_base64,bz2_base64,xz_base64,plain,7z_base74,lzma_base64'
     methods_to_check = methods_to_check.split(',')
@@ -69,6 +71,7 @@ class BBPFTester
       hash_key = m.match?(%r{^[\^]}) ? "plain_#{m.gsub(%r{^[\^]}, '')}" : m
 
       begin
+        use_compressinfo info
         use_compressmethod(m)
         rethash[hash_key] = m == compressmethod_used ? 'Supported' : 'Not Supported'
       rescue LoadError
@@ -79,9 +82,13 @@ class BBPFTester
     methodshashs_to_check
   end
 end
+info = {
+  'PATH' => '/usr/local/bin/:' + ENV['PATH']
+}
+
 bb = BBPFTester.new
 
-result = bb.bbpf_supportmatrixtest
+result = bb.bbpf_supportmatrixtest info: info
 puts JSON.pretty_generate(result)
 puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 
@@ -97,24 +104,17 @@ puts '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
 # Use case 1-
 
 data = 'THIS IS WHAT A COW would SAY!!! Yup COW Say is a Linux Command.bb...'
-info = {
-  'PATH' => '/usr/local/bin/:' + ENV['PATH']
-}
 [
 
-  'cowdragon::shellout2::filein::fileout',
-
-  'cowdragon::shellout2::pipein::pipeout',
-  'cowdragon::shellout2::filein::pipeout',
-
-  'cowdragon', 'cowdragon::shellout2',
-
+  'cowsay', 'cowsay::shellout2',
   'cowsay::shellout2::filein::fileout',
-
   'cowsay::shellout2::pipein::pipeout',
   'cowsay::shellout2::filein::pipeout',
 
-  'cowsay', 'cowsay::shellout2',
+  'cowdragon::shellout2::filein::fileout',
+  'cowdragon::shellout2::pipein::pipeout',
+  'cowdragon::shellout2::filein::pipeout',
+  'cowdragon', 'cowdragon::shellout2',
 
   'examplelinuxscript'
 
@@ -137,6 +137,6 @@ info = {
 end
 
 # Use case 6
-methodshashs_to_check = bb.bbpf_supportmatrix_factertest
+methodshashs_to_check = bb.bbpf_supportmatrix_factertest(info: info)
 
 puts JSON.pretty_generate(methodshashs_to_check)
